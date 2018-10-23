@@ -25,7 +25,6 @@ class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) 
     override fun getItemCount() = books.size
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bindItems(book: Book) {
             itemView.tvTitle.text = book.volumeInfo?.title ?: ""
             itemView.tvPublishDate.text = book.volumeInfo?.publishedDate ?: ""
