@@ -1,6 +1,6 @@
 package com.razzdrawon.googlebookskotlin.models
 
-data class Bookresponse(
+data class BookResponse(
     val totalitems: Integer,
     val items: List<Book>
 )

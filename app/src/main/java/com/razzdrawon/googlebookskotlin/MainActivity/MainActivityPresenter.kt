@@ -1,19 +1,50 @@
 package com.razzdrawon.googlebookskotlin.MainActivity
 
 import com.razzdrawon.googlebookskotlin.models.Book
-import com.razzdrawon.googlebookskotlin.models.ImageLink
-import com.razzdrawon.googlebookskotlin.models.VolumeInfo
+import com.razzdrawon.googlebookskotlin.models.BookResponse
+import com.razzdrawon.googlebookskotlin.services.GoogleBooksService
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 class MainActivityPresenter(
     val view: MainActivityView
 ) {
-    fun getBookList(){
-        var books = ArrayList<Book>()
-        books.add(Book(id = "KER0dd2oYP8C", volumeInfo = VolumeInfo(title = "Embedded Android", imageLink = ImageLink(smallThumbnail = "http://books.google.com/books/content?id=KER0dd2oYP8C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"))))
-        books.add(Book(id = "vhWMAgAAQBAJ", volumeInfo = VolumeInfo(title = "Learning Android", imageLink = ImageLink(smallThumbnail = "http://books.google.com/books/content?id=vhWMAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"))))
-        books.add(Book(id = "KER0dd2oYP8C", volumeInfo = VolumeInfo(title = "Book 3")))
-        books.add(Book(id = "KER0dd2oYP8C", volumeInfo = VolumeInfo(title = "Book 4")))
-        books.add(Book(id = "KER0dd2oYP8C", volumeInfo = VolumeInfo(title = "Book 5")))
-        view.getBookResponseSuccess(books)
+
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://www.googleapis.com/books/v1/")
+            .build()
     }
+
+    fun getBookList(){
+
+        view.showToast("initial call")
+        view.showWait()
+
+        val service = retrofit.create(GoogleBooksService::class.java)
+
+        service.getBooks("android", 0, 10)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { bookResponse: BookResponse? ->
+                    view.removeWait()
+                    view.showToast("response")
+                    view.getBookResponseSuccess(bookResponse?.items as ArrayList<Book>)
+                },
+                {error ->
+                    view.removeWait()
+                    view.showToast(error.message.toString())
+                    view.onAPIFailure()
+                }
+            )
+
+    }
+
+
 }
