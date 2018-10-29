@@ -1,5 +1,6 @@
 package com.razzdrawon.googlebookskotlin.MainActivity
 
+import com.razzdrawon.googlebookskotlin.services.GoogleBooksService
 import dagger.Module
 import dagger.Provides
 
@@ -12,7 +13,7 @@ class MainActivityModule {
     }
 
     @Provides
-    fun provideMainActivityPresenter(mainActivityView: MainActivityView): MainActivityPresenter {
-        return MainActivityPresenter(mainActivityView)
+    fun provideMainActivityPresenter(mainActivityView: MainActivityView, googleBooksService: GoogleBooksService): MainActivityPresenter {
+        return MainActivityPresenter(mainActivityView, googleBooksService)
     }
 }
