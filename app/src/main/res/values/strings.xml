@@ -3,7 +3,7 @@
 
     <string name="title">Book Title</string>
     <string name="publish_date">2018 - Sptember - 14</string>
-    <string name="authors">Authors: </string>
+    <string name="authors">Authors:</string>
     <string name="description">Description</string>
     <string name="no_books">Not able to get books.</string>
     <string name="no_book_details">Not able to get book details.</string>

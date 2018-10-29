@@ -11,11 +11,11 @@ class MainActivityPresenter(
     val service: GoogleBooksService
 ) {
 
-    fun getBookList(){
+    fun getBookList(query: String, startIndex: Int, maxResults: Int){
 
         view.showWait()
 
-        service.getBooks("android", 0, 10)
+        service.getBooks(query, startIndex, maxResults)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
