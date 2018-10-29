@@ -13,15 +13,15 @@ import javax.inject.Inject
 class MainActivity : DaggerAppCompatActivity(), MainActivityView {
 
     @Inject
-    val presenter: MainActivityPresenter? = null
+    lateinit var presenter: MainActivityPresenter
 
-    var adapter: BookItemAdapter? = null
+    lateinit var adapter: BookItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter?.getBookList()
+        presenter.getBookList()
 
         adapter = BookItemAdapter(ArrayList<Book>(),this)
         booksRecyclerView.hasFixedSize()
@@ -46,7 +46,7 @@ class MainActivity : DaggerAppCompatActivity(), MainActivityView {
     }
 
     override fun getBookResponseSuccess(books: ArrayList<Book>) {
-        this.adapter?.updateBooks(books)
+        this.adapter.updateBooks(books)
         failureMessage.setVisibility(View.GONE)
     }
 

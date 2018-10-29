@@ -1,6 +1,7 @@
 package com.razzdrawon.googlebookskotlin
 
 import com.razzdrawon.googlebookskotlin.di.AppComponent
+import com.razzdrawon.googlebookskotlin.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
