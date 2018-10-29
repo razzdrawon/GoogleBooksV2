@@ -1,16 +1,18 @@
 package com.razzdrawon.googlebookskotlin.di
 
 import android.app.Application
-import com.razzdrawon.googlebookskotlin.GoogleBooksApp
+import android.content.Context
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
+import dagger.Provides
 
 @Module
 class AppModule {
+
     @Provides
     @Singleton
-    fun provideContext(application: Application): GoogleBooksApp {
-        return application as GoogleBooksApp
+    fun provideContext(application: Application): Context {
+        return application
     }
+
 }

@@ -1,21 +1,11 @@
 package com.razzdrawon.googlebookskotlin
 
-import com.razzdrawon.googlebookskotlin.di.AppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import com.razzdrawon.googlebookskotlin.di.DaggerAppComponent
 
 class GoogleBooksApp : DaggerApplication() {
-
-    override fun onCreate() {
-        super.onCreate()
+    override fun applicationInjector(): AndroidInjector<out GoogleBooksApp> {
+        return DaggerAppComponent.builder().create(this);
     }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication>? {
-        val component: AppComponent = DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
-        return component
-    }
-
 }

@@ -13,9 +13,9 @@ import javax.inject.Inject
 class MainActivity : DaggerAppCompatActivity(), MainActivityView {
 
     @Inject
-    val presenter: MainActivityPresenter? = null
+    internal lateinit var presenter: MainActivityPresenter
 
-    var adapter: BookItemAdapter? = null
+    lateinit var adapter: BookItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class MainActivity : DaggerAppCompatActivity(), MainActivityView {
     }
 
     override fun getBookResponseSuccess(books: ArrayList<Book>) {
-        this.adapter?.updateBooks(books)
+        this.adapter.updateBooks(books)
         failureMessage.setVisibility(View.GONE)
     }
 
