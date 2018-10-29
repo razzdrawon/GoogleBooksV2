@@ -23,7 +23,6 @@ class MainActivityPresenter(
 
     fun getBookList(){
 
-        view.showToast("initial call")
         view.showWait()
 
         val service = retrofit.create(GoogleBooksService::class.java)
@@ -34,7 +33,6 @@ class MainActivityPresenter(
             .subscribe(
                 { bookResponse: BookResponse? ->
                     view.removeWait()
-                    view.showToast("response")
                     view.getBookResponseSuccess((bookResponse?.items as ArrayList<Book>))
                 },
                 {error ->
