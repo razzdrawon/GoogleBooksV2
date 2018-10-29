@@ -35,7 +35,7 @@ class MainActivityPresenter(
                 { bookResponse: BookResponse? ->
                     view.removeWait()
                     view.showToast("response")
-                    view.getBookResponseSuccess(bookResponse?.items as ArrayList<Book>)
+                    view.getBookResponseSuccess((bookResponse?.items as ArrayList<Book>))
                 },
                 {error ->
                     view.removeWait()

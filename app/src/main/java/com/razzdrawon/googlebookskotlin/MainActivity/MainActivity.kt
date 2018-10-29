@@ -1,27 +1,31 @@
 package com.razzdrawon.googlebookskotlin.MainActivity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.razzdrawon.googlebookskotlin.R
 import com.razzdrawon.googlebookskotlin.models.Book
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainActivityView {
+class MainActivity : DaggerAppCompatActivity(), MainActivityView {
 
-    var adapter: BookItemAdapter? = BookItemAdapter(ArrayList<Book>(),this)
+    @Inject
+    val presenter: MainActivityPresenter? = null
+
+    var adapter: BookItemAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val presenter: MainActivityPresenter = MainActivityPresenter(this)
-        presenter.getBookList()
+        presenter?.getBookList()
 
-        booksRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = BookItemAdapter(ArrayList<Book>(),this)
         booksRecyclerView.hasFixedSize()
+        booksRecyclerView.layoutManager = LinearLayoutManager(this)
         booksRecyclerView.adapter = adapter
     }
 

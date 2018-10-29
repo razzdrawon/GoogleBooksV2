@@ -28,9 +28,7 @@ class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) 
         fun bindItems(book: Book) {
             itemView.tvTitle.text = book.volumeInfo?.title ?: ""
             itemView.tvPublishDate.text = book.volumeInfo?.publishedDate ?: ""
-            if(book.volumeInfo?.imageLinks != null) {
-                Picasso.get().load(book.volumeInfo?.imageLinks?.smallThumbnail).into(itemView.imgThumbnail)
-            }
+            Picasso.get().load(book.volumeInfo?.imageLinks?.smallThumbnail).into(itemView.imgThumbnail)
         }
     }
 
