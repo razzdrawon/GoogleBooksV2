@@ -33,9 +33,15 @@ class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val context: Context = itemView.context
         fun bindItems(book: Book) {
+
             itemView.tvTitle.text = book.volumeInfo?.title ?: ""
             itemView.tvPublishDate.text = book.volumeInfo?.publishedDate ?: ""
-            Picasso.get().load(book.volumeInfo?.imageLinks?.smallThumbnail).into(itemView.imgThumbnail)
+            if (book.volumeInfo?.imageLinks?.smallThumbnail != null && book.volumeInfo?.imageLinks?.smallThumbnail != "") {
+                Picasso.get().load(book.volumeInfo?.imageLinks?.smallThumbnail).into(itemView.imgThumbnail)
+            } else {
+                itemView.imgThumbnail.setImageResource(R.mipmap.ic_launcher)
+            }
+
             itemView.setOnClickListener(
                 {
                     val intent: Intent = Intent(context, BookDetailsActivity::class.java)
@@ -47,7 +53,7 @@ class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) 
     }
 
     fun updateBooks(books: List<Book>) {
-        if(books != null){
+        if (books != null) {
             this.books.addAll(books);
             notifyDataSetChanged();
         }

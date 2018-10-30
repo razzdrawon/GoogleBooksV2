@@ -2,7 +2,6 @@ package com.razzdrawon.googlebookskotlin.MainActivity
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.AbsListView

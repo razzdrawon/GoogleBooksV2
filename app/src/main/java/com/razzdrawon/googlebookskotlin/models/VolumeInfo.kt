@@ -7,5 +7,18 @@ data class VolumeInfo (
     val publishedDate: String? = "",
     val description: String? = "",
     val imageLinks: ImageLink? = ImageLink(),
-    val authors: List<String>? = ArrayList()
-)
+    val authors: List<String> = ArrayList()
+){
+    fun authorsString(): String {
+        var authorsString = ""
+        for (author in authors) {
+            if (authorsString === "") {
+                authorsString = author
+            } else {
+                authorsString = authorsString + "\n" + author
+            }
+
+        }
+        return authorsString
+    }
+}
