@@ -8,4 +8,7 @@
     <string name="no_books">Not able to get books.</string>
     <string name="no_book_details">Not able to get book details.</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

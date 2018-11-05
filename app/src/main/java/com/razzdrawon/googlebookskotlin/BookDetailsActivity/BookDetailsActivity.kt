@@ -2,13 +2,11 @@ package com.razzdrawon.googlebookskotlin.BookDetailsActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import com.razzdrawon.googlebookskotlin.BookDetailsActivity.Fragment.BookDetailsFragment
 import com.razzdrawon.googlebookskotlin.MainActivity.BookItemAdapter
 import com.razzdrawon.googlebookskotlin.R
 import com.razzdrawon.googlebookskotlin.models.Book
-import com.squareup.picasso.Picasso
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_book_details.*
 import javax.inject.Inject
 
 class BookDetailsActivity : DaggerAppCompatActivity(), BookDetailsActivityView {
@@ -21,32 +19,14 @@ class BookDetailsActivity : DaggerAppCompatActivity(), BookDetailsActivityView {
         setContentView(R.layout.activity_book_details)
 
         val intent : Intent = intent
-        val bookId = intent.getStringExtra(BookItemAdapter.BOOK_ID)
-        presenter.getBookDetails(bookId)
+
+        val books = intent.extras.getParcelableArrayList<Book>(BookItemAdapter.BOOK_LIST) as ArrayList<Book>
+        val position = intent.extras.getInt(BookItemAdapter.BOOK_POSITION)
+
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, BookDetailsFragment().newInstance(books.get(position))).commit()
     }
 
-    override fun showWait() {
-        progressDetails.setVisibility(View.VISIBLE)
-    }
+    override fun showLoaded(message: String) {
 
-    override fun removeWait() {
-        progressDetails.setVisibility(View.GONE)
     }
-
-    override fun onAPIFailure() {
-        failure_book_message.setVisibility(View.VISIBLE)
-        book_details_layout.setVisibility(View.GONE)
-    }
-
-    override fun getBookDetailsSuccess(book: Book) {
-        tvPublishDate.text = book.volumeInfo?.publishedDate
-        tvAuthors.text = book.volumeInfo?.authorsString()
-        tvDescription.text = book.volumeInfo?.description
-        if (book.volumeInfo?.imageLinks?.smallThumbnail != null && book.volumeInfo?.imageLinks.smallThumbnail != "") {
-            Picasso.get().load(book.volumeInfo?.imageLinks?.smallThumbnail).into(imgBookCover)
-        } else {
-            imgBookCover.setImageResource(R.mipmap.ic_launcher)
-        }
-    }
-
 }

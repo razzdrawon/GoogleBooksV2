@@ -11,28 +11,33 @@ import com.razzdrawon.googlebookskotlin.R
 import com.razzdrawon.googlebookskotlin.models.Book
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.book_item.view.*
+import android.os.Bundle
+
+
 
 class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) :
     RecyclerView.Adapter<BookItemAdapter.MyViewHolder>() {
 
     companion object {
         val BOOK_ID = "book_id"
+        val BOOK_LIST = "book_list"
+        val BOOK_POSITION = "position"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookItemAdapter.MyViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.book_item, parent, false)
-        return MyViewHolder(v)
+        return MyViewHolder(v, books)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindItems(books[position])
+        holder.bindItems(books[position], position)
     }
 
     override fun getItemCount() = books.size
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View, private val books: ArrayList<Book>) : RecyclerView.ViewHolder(itemView) {
         val context: Context = itemView.context
-        fun bindItems(book: Book) {
+        fun bindItems(book: Book, position: Int) {
 
             itemView.tvTitle.text = book.volumeInfo?.title ?: ""
             itemView.tvPublishDate.text = book.volumeInfo?.publishedDate ?: ""
@@ -45,7 +50,10 @@ class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) 
             itemView.setOnClickListener(
                 {
                     val intent: Intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra(BOOK_ID, book.id)
+                    val extras = Bundle()
+                    intent.putExtra(BOOK_LIST, books)
+                    intent.putExtra(BOOK_POSITION, position)
+                    intent.putExtras(extras)
                     context.startActivity(intent)
                 }
             )
