@@ -35,11 +35,11 @@ class BookDetailsFragment : DaggerFragment(), BookDetailsFragmentView {
     }
 
     override fun showWait() {
-        //progress.visibility = View.VISIBLE
+        //progressDetails.visibility = View.VISIBLE
     }
 
     override fun removeWait() {
-        //progress.visibility = View.GONE
+        //progressDetails.visibility = View.GONE
     }
 
     override fun onAPIFailure() {
@@ -49,7 +49,7 @@ class BookDetailsFragment : DaggerFragment(), BookDetailsFragmentView {
 
     override fun getBookDetailsSuccess(book: Book) {
 
-        progress.visibility = View.VISIBLE
+        progressDetails.visibility = View.VISIBLE
 
         tvPublishDate.text = book.volumeInfo?.publishedDate
         tvAuthors.text = book.volumeInfo?.authorsString()
@@ -60,7 +60,7 @@ class BookDetailsFragment : DaggerFragment(), BookDetailsFragmentView {
             imgBookCover.setImageResource(R.mipmap.ic_launcher)
         }
 
-        progress.visibility = View.GONE
+        progressDetails.visibility = View.GONE
     }
 
 }
