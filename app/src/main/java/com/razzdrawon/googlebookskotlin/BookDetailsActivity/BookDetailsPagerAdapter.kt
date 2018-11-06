@@ -4,14 +4,16 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.razzdrawon.googlebookskotlin.BookDetailsActivity.Fragment.BookDetailsFragment
+import com.razzdrawon.googlebookskotlin.models.Book
 
-class BookDetailsPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
+class BookDetailsPagerAdapter(fragmentManager: FragmentManager, private val books: ArrayList<Book>) : FragmentStatePagerAdapter(fragmentManager) {
+
     override fun getItem(position: Int): Fragment {
-        return BookDetailsFragment()
+        return BookDetailsFragment.newInstance(books[position])
     }
 
     override fun getCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return books.size
     }
 
 }

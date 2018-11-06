@@ -11,18 +11,19 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_book_details.*
 import javax.inject.Inject
 
-
 class BookDetailsFragment : DaggerFragment(), BookDetailsFragmentView {
 
     @Inject
     lateinit var presenter: BookDetailsFragmentPresenter
 
-    fun newInstance(book: Book): BookDetailsFragment {
-        val args = Bundle()
-        args.putParcelable("Book", book)
-        val fragment = BookDetailsFragment()
-        fragment.setArguments(args)
-        return fragment
+    companion object {
+        fun newInstance(book: Book): BookDetailsFragment {
+            val args = Bundle()
+            args.putParcelable("Book", book)
+            val fragment = BookDetailsFragment()
+            fragment.setArguments(args)
+            return fragment
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,19 +35,22 @@ class BookDetailsFragment : DaggerFragment(), BookDetailsFragmentView {
     }
 
     override fun showWait() {
-        //progressDetails.setVisibility(View.VISIBLE)
+        //progress.visibility = View.VISIBLE
     }
 
     override fun removeWait() {
-        //progressDetails.setVisibility(View.GONE)
+        //progress.visibility = View.GONE
     }
 
     override fun onAPIFailure() {
-        failure_book_message.setVisibility(View.VISIBLE)
-        book_details_layout.setVisibility(View.GONE)
+        failure_book_message.visibility = View.VISIBLE
+        book_details_layout.visibility = View.GONE
     }
 
     override fun getBookDetailsSuccess(book: Book) {
+
+        progress.visibility = View.VISIBLE
+
         tvPublishDate.text = book.volumeInfo?.publishedDate
         tvAuthors.text = book.volumeInfo?.authorsString()
         tvDescription.text = book.volumeInfo?.description
@@ -55,6 +59,8 @@ class BookDetailsFragment : DaggerFragment(), BookDetailsFragmentView {
         } else {
             imgBookCover.setImageResource(R.mipmap.ic_launcher)
         }
+
+        progress.visibility = View.GONE
     }
 
 }

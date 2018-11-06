@@ -9,8 +9,7 @@ import rx.schedulers.Schedulers
 class BookDetailsFragmentPresenter(private val view: BookDetailsFragmentView, var service: GoogleBooksService) {
 
     fun getBookDetails(bookId: String) {
-        view.showWait()
-
+        //view.showWait()
         service.getBookById(bookId)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())

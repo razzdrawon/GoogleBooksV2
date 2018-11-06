@@ -13,13 +13,10 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.book_item.view.*
 import android.os.Bundle
 
-
-
 class BookItemAdapter(private val books: ArrayList<Book>, val context: Context) :
     RecyclerView.Adapter<BookItemAdapter.MyViewHolder>() {
 
     companion object {
-        val BOOK_ID = "book_id"
         val BOOK_LIST = "book_list"
         val BOOK_POSITION = "position"
     }
